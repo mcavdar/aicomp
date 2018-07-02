@@ -78,25 +78,27 @@ def jsonoutput(request, error=None):
 		questions=Question.objects.filter(document=doc)
 		d1 = []
 		for qst in questions:
-		    rps=Reponse.objects.filter(question=qst)
+		    rps=Reponse.objects.filter(question=qst,annotator=annotator)
 		    if len(rps)>0:
 			rpss = rps[0]
 		        d1.append(OrderedDict([("cevap_baslangici",rpss.reponseIdx),("cevap",rpss.reponse),("soru",rpss.question.text)]))
-		a['paragraflar'].append({'paragraf_metni':doc.text,'soru_cevaplar':d1})
+		if(len(d1)>0):
+		    a['paragraflar'].append({'paragraf_metni':doc.text,'soru_cevaplar':d1})
 		break
 	if flag==0:
 	    questions=Question.objects.filter(document=doc)
             d1 = []
             for qst in questions:
-                rps=Reponse.objects.filter(question=qst)
+                rps=Reponse.objects.filter(question=qst,annotator=annotator)
 		if len(rps)>0:
 		    rpss=rps[0]
 	            d1.append(OrderedDict([("cevap_baslangici",rpss.reponseIdx),("cevap",rpss.reponse),("soru",rpss.question.text)]))
 		print(d1)
-	    dt={}
-            dt['baslik']=doc.title
-            dt['paragraflar']=[{'paragraf_metni':doc.text,'soru_cevaplar':d1}]
-            data['veri'].append(dt)
+	    if len(d1)>0:
+	    	dt={}
+            	dt['baslik']=doc.title
+            	dt['paragraflar']=[{'paragraf_metni':doc.text,'soru_cevaplar':d1}]
+            	data['veri'].append(dt)
 
 	print("paragraf:")
 	#print(rps.document.text)
@@ -464,7 +466,7 @@ def upload_file(request, project_id=None):
             doc.text = doc_text
             #doc.text = smart_unicode(doc.text, encoding='utf-8', strings_only=False, errors='ignore')
             doc.save()
-	    return projectEdit(request, project_id=project_id)   
+	    return projectEdit(request, project_id=project_id,error="islem basariyla tamamlanmistir.")   
     f = request.FILES['fileToUpload']
     if (not f.name.endswith('.txt')) and (not f.name.endswith('.zip')):
         return projectEdit(request,project_id=project_id,error="Please select a file to upload (supported formats are .zip and .txt).")
@@ -491,7 +493,7 @@ def upload_file(request, project_id=None):
             doc.text = smart_unicode(doc.text, encoding='utf-8', strings_only=False, errors='ignore')
             doc.save()
         zip.close()
-    return projectEdit(request, project_id=project_id)   
+    return projectEdit(request, project_id=project_id,error="islem basariyla tamamlanmistir.")   
 
 @login_required
 def projectList(request, error=None):
