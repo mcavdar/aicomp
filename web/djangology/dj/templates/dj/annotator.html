@@ -49,10 +49,19 @@ Add an Annotator
 <div class="fieldWrapper">
 
         
-    <table>
-        {{ form.as_table }}
-    </table>
-    
+<table>   
+{% for field in form %}
+
+{% ifnotequal field.name|stringformat:"s" "is_superuser" %}
+
+{{ field.label }} {{ field }} 
+                    {% if forloop.counter|divisibleby:"2" %}
+                        <br>
+                    {% endif %}
+
+{% endifnotequal %}
+{% endfor %}
+ </table>
     {% if form.instance.id %}
         <input type="hidden" name="annotator_id" value="{{form.instance.id}}"/>
         {% endif %}

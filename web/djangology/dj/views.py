@@ -631,10 +631,10 @@ def docSubmit(request):
 
 
 
-@login_required
+#@login_required
 def editAnnotator(request, annotator_id=None):
-    if not request.user.is_superuser:
-        return HttpResponseForbidden("Error: You must be an administrator to use this form")
+    #if not request.user.is_superuser:
+    #    return HttpResponseForbidden("Error: You must be an administrator to use this form")
     if request.method == 'POST': # If the form has been submitted...
         newPass=True
         if request.POST.has_key('annotator_id'):
@@ -655,6 +655,8 @@ def editAnnotator(request, annotator_id=None):
         form = AnnotatorForm(instance=a)
     else:
         form = AnnotatorForm() # An unbound form
+	print("zxzxzxz")
+	print(form)
     return render_to_response('dj/annotator.html', {
         'form': form,
         },
