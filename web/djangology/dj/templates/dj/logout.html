@@ -1,0 +1,32 @@
+
+{% extends "dj/base.html" %}
+        {% block logout %}  {% endblock %}
+        {% block title %}Çıkış yaptınız.{% endblock %}
+{% block page-name %}
+Çıkış yaptınız.
+{% endblock %}
+{% block navigation %}{% endblock %}
+{% block content %}
+
+
+<p>Djangology'i kullandığınız için teşekkürler.</p>
+
+
+<form method="get" action="{% url django.contrib.auth.views.login %}">
+<table>
+<tr>
+    <td>{{ form.username.label_tag }}</td>
+    <td>{{ form.username }}</td>
+</tr>
+<tr>
+    <td>{{ form.password.label_tag }}</td>
+    <td>{{ form.password }}</td>
+</tr>
+</table>
+
+<input type="submit" value="Giriş Sayfasına Dön" />
+<!--<input type="hidden" name="next" value="{{ next }}" />-->
+<input type="hidden" name="next" value="{% url dj.views.start %}" />
+</form>
+
+{% endblock %}

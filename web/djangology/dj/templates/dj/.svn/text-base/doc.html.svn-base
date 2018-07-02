@@ -1,0 +1,242 @@
+{% extends "dj/base.html" %}
+
+
+{% block title %}'{{doc.title}}' - Annotation View{% endblock %}
+{% block page-name %}'{{doc.title}}' - Annotation View{% endblock %}
+
+{% block css %}
+
+<style type="text/css">
+.vLargeTextField, .vXMLLargeTextField { width:78em;  }
+.instructions {
+    #color: f4f379 !important;
+    color: black !important;
+	font-size:12px;
+    font-weight: normal;
+	margin-right:100px;
+}
+
+.submitted {
+    color: black !important;
+    font-weight: bolder;
+}
+
+.ne {
+    background-color: #FFCC00 !important;
+    font-weight: bold;
+}
+
+.newNec {
+    color: black !important;
+    font-weight: bolder;
+	text-decoration: underline;
+}
+
+{% include "dj/snippets/annotationTypes.css" %}
+
+</style>
+{% endblock %}
+
+{% block js %}
+
+<script src="{{ MEDIA_URL }}dj/popup/prototype.js" type="text/javascript"></script>
+<script src="{{ MEDIA_URL }}dj/popup/effects.js" type="text/javascript"></script>
+<script src="{{ MEDIA_URL }}dj/popup/dragdrop.js" type="text/javascript"></script>
+<script src="{{ MEDIA_URL }}dj/popup/popup.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="/media/popup/popup.css" type="text/css" />
+<script>
+
+
+    function onrightclick(e) {
+
+        var selectedText = '';
+
+        if (navigator.appName == 'Microsoft Internet Explorer' && e.button == 0) {
+            selectedText = document.selection.createRange().text;
+
+        } else {
+            selectedText = window.getSelection();
+
+
+        }
+
+        addNewNamedEntity(selectedText, e);
+        Event.stop(e);
+        return true;
+    }
+
+	function selectNew(e){
+	   var txt= window.getSelection ? window.getSelection() : document.getSelection ? document.getSelection() : document.selection.createRange().text;
+	   var input = $("newNecId");
+	           input.value=txt;
+	           return addNewNamedEntity(txt, e);
+	}
+
+
+    function addNewNamedEntity(txt, e) {
+       
+	    var input = $("newNecId");
+		input.value = '';
+	    txt=txt.toString();
+        if (txt!= null && txt.length>0) {
+            var input = $("newNecId");
+            input.value = txt;
+      		new Popup('newCategoryPopupId',null,{modal:true, position:Event.pointerX(e)+','+Event.pointerY(e)});
+      		$('newCategoryPopupId').popup.show();
+        } 
+    }
+
+	function submitNewNamedEntity(category_id) {
+	    var input = $("newNecId");
+	    var catInput = $("newNecCategoryId");
+        if (input.value!= null && input.value.length>0) {
+	        catInput.value=category_id;
+            var form = $("newNamedEntityFormId");
+            form.submit();
+        }
+    }
+
+    function submitCategory(categoryId, catClassName) {
+        //todo ajax call to submit, category, abstract id, begin index, end index
+        //var xmlhttp =  new XMLHttpRequest();
+        //xmlhttp.open('POST', 'rating-submit.php', true);
+		indices = document.getElementById('selectionId').value;
+		var req = new Ajax.Request('{% url dj.views.updateAnnotation %}',
+            {
+              method:'post',
+			  parameters: {document_id: '{{doc.id}}', indices: indices, category_id: categoryId},
+              onSuccess: function(transport){
+                var response = transport.responseText || "no response text";
+                //alert("Success! \n\n" + response);
+              },
+              onFailure: function(){ alert('Something went wrong...') }
+            });
+
+		$('neCategoryId').popup.hide();
+        document.getElementById(indices).className = catClassName;
+    }
+
+
+    function ne(e) {
+        
+        el = Event.element(e);
+        if (el.className == "ne" || el.className.indexOf("category") >-1) {
+			//ne_1_2
+            $('selectionId').value = el.id;
+			new Popup('neCategoryId',null,{modal:true, position:Event.pointerX(e)+','+Event.pointerY(e)});
+			$('neCategoryId').popup.show();
+            
+        }
+    }
+
+</script>
+
+
+{% endblock %} <!-- end js block -->
+
+<!-- pagename block -->
+
+<!-- instructional info & etc. block -->
+
+
+{% block content %}
+    <!-- instructions & errors -->
+{% if annotator.is_superuser %}
+            <a href="{% url dj.views.projectEdit doc.project.id %}">Back to {{ doc.project.name }}</a>
+            {% else %}
+            <a href="{% url dj.views.index %}">Back to document list</a>
+            {% endif %}<br /><br />
+                    
+
+        <div class="instructions">
+
+            <b>To create new annotations or modify/delete existing annotations, right click after text/annotation selection.<p/>
+            Annotations are automatically saved as entered. </b><br />
+
+        </div>
+        {% include "dj/snippets/annotationTypes.html" %}
+
+    {% if error_message %}
+        {{ error_message }}
+    {% endif %}
+
+    {% block admin_select_user %}
+    {% endblock %}
+
+    <input id="selectionId" type="hidden" value=""/>
+
+		  <DIV id="newCategoryPopupId" STYLE="display: none; background:#FFFAF0 !important; position: absolute !important;">
+              <div align="right"><a href="#" class="popup_closebox">Close</a></div>
+              <table>
+
+                   {% if annotation_types %}
+                        {% for annotation_type in annotation_types %}
+                          <tr class="category{{annotation_type.id}}">
+                              <th class="category{{annotation_type.id}}"><a class="category{{annotation_type.id}}" href="#" onclick="submitNewNamedEntity( {{annotation_type.id}});">{{annotation_type.type}}</a></th>
+                          </tr>
+                        {% endfor %}
+                    {% endif %}
+
+
+              </table>
+          </DIV>
+
+          <DIV id="neCategoryId" STYLE="display: none; background:#FFFAF0 !important; position: absolute !important;">
+              <div align="right"><a href="#" class="popup_closebox">Close</a></div>
+              <table>
+
+                  {% if annotation_types %}
+                        {% for annotation_type in annotation_types %}
+
+                          <tr class="category{{annotation_type.id}}">
+                                <th class="category{{annotation_type.id}}"><a class="category{{annotation_type.id}}" href="#" onclick="submitCategory( {{annotation_type.id}},'category{{annotation_type.id}}');">{{annotation_type.type}}</a></th>
+                           </tr>
+
+                        {% endfor %}
+
+                        <tr class="category{{annotation_type.id}}">
+                                <th class="categoryDelete"><a class="categoryDelete" href="#" onclick="submitCategory( 'Delete','categoryDelete}');">X (Delete)</a></th>
+                           </tr>
+                    {% endif %}
+
+              </table>
+
+          </DIV>
+          <div>
+             
+
+
+		    <!-- add new form -->
+
+			<form action="{% url dj.views.newAnnotation %}" id="newNamedEntityFormId" method="post">
+              <input type="hidden" name="document_id" value="{{doc.id}}"/>
+			  <input type="hidden" name="newNec" id="newNecId"/>
+			  <input type="hidden" name="newNecCategoryId" id="newNecCategoryId"/>
+              
+			 </form>
+			
+    <div>
+        <div class="form-row" >
+            <label for="id_title" class="required">{{doc.title}}</label>
+            <label for="id_title" class="required"> Annotator: {{annotator.username}}</label>
+        </div>
+        <!-- form -->
+        <form action="{% url dj.views.docSubmit %}" method="post" id="abstract_form">
+        <!-- field set -->
+        <fieldset class="module" style="margin-right:50px; margin-top:10px; ">
+            <div class="vLargeTextField" id="abstractTxtId" onclick="ne(event);" onmouseup="ne(event);" oncontextmenu="onrightclick(event);"  name="abstract" rows="100" cols="100">
+						{% autoescape off %}{{doc.text}}{% endautoescape %}
+            </div>
+            <input type="hidden" name="doc_id" value="{{doc.id}}" id="submit_abstract_id"/>
+        </fieldset>
+        <!-- end field set -->
+        {% if not doc.submit_date %}
+            <div class="submit-row" style="margin-right:50px;">
+            <input type="submit" value="Mark as Completed" class="default" />
+            </div>
+        {% endif %}
+        </form>
+    </div>
+{% endblock %}
+

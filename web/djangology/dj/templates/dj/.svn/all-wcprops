@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svnroot/djangology/!svn/ver/25/dj/templates/dj
+END
+docCompare.html
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svnroot/djangology/!svn/ver/20/dj/templates/dj/docCompare.html
+END
+stats.html
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svnroot/djangology/!svn/ver/2/dj/templates/dj/stats.html
+END
+project-list.html
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svnroot/djangology/!svn/ver/20/dj/templates/dj/project-list.html
+END
+annotator.html
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svnroot/djangology/!svn/ver/20/dj/templates/dj/annotator.html
+END
+doc.html
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svnroot/djangology/!svn/ver/25/dj/templates/dj/doc.html
+END
+index.html
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svnroot/djangology/!svn/ver/12/dj/templates/dj/index.html
+END
+login.html
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svnroot/djangology/!svn/ver/12/dj/templates/dj/login.html
+END
+logout.html
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svnroot/djangology/!svn/ver/12/dj/templates/dj/logout.html
+END
+project-edit.html
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svnroot/djangology/!svn/ver/25/dj/templates/dj/project-edit.html
+END
+base.html
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svnroot/djangology/!svn/ver/19/dj/templates/dj/base.html
+END

@@ -1,0 +1,121 @@
+{% extends "dj/base.html" %}
+
+{% block title %}Side-by-side annotations comparison for document '{{doc1.title}}'.{% endblock %}
+
+    {% block page-name %}
+ Side-by-side annotations comparison for document '{{doc1.title}}'.
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}dj/css/changelists.css"/>
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}dj/css/forms.css" />
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}dj/css/annotationTypes.css" />
+        <style type="text/css">
+.vLargeTextField, .vXMLLargeTextField { width:78em; }
+.instructions {
+    #color: f4f379 !important;
+    color: black !important;
+	font-size:12px;
+    font-weight: normal;
+	margin-right:100px;
+}
+            {% include "dj/snippets/annotationTypes.css" %}
+
+</style>
+{% endblock %}
+
+        {% block breadcrumb %}<a href="{% url dj.views.start %}">Home</a>{% endblock %}
+{% block content %}
+
+
+
+<!-- Container -->
+<div id="container">
+
+
+    <!-- Content -->
+
+    <div id="content" class="colM">
+
+
+
+		<!-- div content-main -->
+
+
+                    {% include "dj/snippets/annotationTypes.html" %}
+
+
+
+
+            {% if error_message %}
+            <div class="errornote" style="margin-right:50px;">
+                        {{ error_message }}
+            </div>
+            {% endif %}
+
+
+
+
+
+          <div>
+              <!-- field set -->
+              <fieldset class="module" style="margin-right:50px; margin-top:10px; ">
+                <div class="form-row" >
+                  <label for="id_title1" class="required">Annotator  {{annotator1.username}}</label>
+                </div>
+
+
+
+
+			<!-- form -->
+                <div class="form-row" >
+                    <div class="vLargeTextField" id="doc1TxtId"  name="doc1Txt" rows="100" cols="100">
+						{% autoescape off %}{{doc1.text}}{% endautoescape %}
+                    </div>
+                </div>
+              </fieldset>
+
+
+
+      		<!-- end field set -->
+
+          </div>
+
+            <div>
+              <!-- field set -->
+              <fieldset class="module" style="margin-right:50px; margin-top:10px; ">
+                <div class="form-row" >
+                  <label for="id_title2" class="required">Annotator  {{annotator2.username}}</label>
+                </div>
+
+
+
+
+			<!-- form -->
+                <div class="form-row" >
+                    <div class="vLargeTextField" id="doc2TxtId"  name="doc2Txt" rows="100" cols="100">
+						{% autoescape off %}{{doc2.text}}{% endautoescape %}
+                    </div>
+
+                </div>
+              </fieldset>
+
+
+
+      		<!-- end field set -->
+
+          </div>
+		<!-- end form -->
+
+        <!--</div>-->
+
+	 <!-- div content-main -->
+     <br class="clear" />
+    </div>
+    <!-- END Content -->
+    <div id="footer"></div>
+</div>
+<!-- END Container -->
+
+{% endblock %}
+

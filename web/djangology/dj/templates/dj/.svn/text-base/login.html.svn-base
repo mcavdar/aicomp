@@ -1,0 +1,30 @@
+{% extends "dj/base.html" %}
+{% block logout %}  {% endblock %}
+{% block title %}Login{% endblock %}
+{% block page-name %}Login to Djangology{% endblock %}
+{% block navigation %}{% endblock %}
+{% block content %}
+{% if form.errors %}
+    <div class="errornote" style="margin-right:50px;">
+        Your username and password didn't match. Please try again.
+    </div>
+{% endif %}
+
+<form method="post" action="{% url django.contrib.auth.views.login %}">
+<table>
+<tr>
+    <td>{{ form.username.label_tag }}</td>
+    <td>{{ form.username }}</td>
+</tr>
+<tr>
+    <td>{{ form.password.label_tag }}</td>
+    <td>{{ form.password }}</td>
+</tr>
+</table>
+
+<input type="submit" value="login" />
+<!--<input type="hidden" name="next" value="{{ next }}" />-->
+<input type="hidden" name="next" value="{% url dj.views.start %}" />
+</form>
+{% endblock %}
+

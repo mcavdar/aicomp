@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>{% block title %}Page Title{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}dj/css/forms.css" />
+    <!--<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}dj/css/djangology.css" />-->
+    <!-- site wide css goes here -->
+    <style type="text/css">
+        #container {
+            position:relative; width:100%; min-width:760px; padding:0; 
+            background-image:url({{ MEDIA_URL }}dj/img/background.png); background-repeat: repeat; 
+        }
+        .nav {
+            padding: 0;
+            padding-left: 1em;
+            margin: 0;
+            color: #fff;
+            white-space: nowrap;
+            list-style-type: none;
+            display: table;
+        }
+        .nav li {
+            display: inline;
+        }
+        .nav li a {
+            padding: 0.2em 1em;
+            background #fc6;
+            color: #000;
+            text-decoration: none;
+            float: left;
+            border: 1px solid #000;
+        }
+        .nav li a:hover {
+            background: #08c;
+            color: #fff;
+        }
+    </style>
+    
+	{% block css %} {% endblock %}
+	{% block js %} {% endblock %}
+	<meta name="robots" content="NONE,NOARCHIVE" />
+</head>
+
+<body>
+
+<!-- Container -->
+
+{% block hidden-content %} {% endblock %}
+<div id="container">
+
+    <!-- Header -->
+
+    <div id="header">
+
+        <div id="branding">
+            <!--<a href="{% url dj.views.index %}">-->
+                <img src="{{ MEDIA_URL }}dj/img/djangology.png" alt="Logo" /><!--</a>-->
+        	<h1 id="site-name">
+                {% block page-name %}Name of page{% endblock %}  <!--{% block logout %}<div align="right"> <a href="{% url django.contrib.auth.views.logout %}">Logout</a> </div>{% endblock %}-->
+        	</h1>
+
+        </div>
+
+    </div>
+
+    <!-- END Header -->
+    <!--<div  class="breadcrumbs" id="breadcrumbs">
+                {% block breadcrumb %}<a href="{% url dj.views.start %}">Home</a>{% endblock %}
+    </div>-->
+    
+    <div>
+        {% block navigation %}
+        <ul class="nav">
+          <li><a href="{% url dj.views.index %}">Access your Document List</a></li>
+            {% if user.is_superuser %}<li><a href="{% url dj.views.projectList %}">Manage Projects and Annotators</a></li>{% endif %}
+            <li><a href="{% url django.contrib.auth.views.logout %}">Logout</a></li>
+        </ul>
+        {% endblock %}
+    </div>
+    <!-- Content -->
+
+
+    <div id="content" class="colM">
+            <div id="content-main" >
+
+	            {% if error_message %}
+                    <div class="errornote" style="margin-right:50px;">
+                        {{ error_message }}
+                    </div>
+                {% endif %}
+
+                {% block content %}
+                {% endblock %}
+	        </div>
+            <br class="clear" />
+	</div>
+
+    <div id="footer">{% block footer %} {% endblock %}</div>
+
+
+</body>
+</html>

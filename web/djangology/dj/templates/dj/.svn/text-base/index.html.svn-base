@@ -1,0 +1,72 @@
+{% extends "dj/base.html" %}
+{% block title%}Select a document to annotate{% endblock %}
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}dj/css/changelists.css" />
+{% endblock %}
+
+{% block page-name %}Your Document List{% endblock %}
+{% block breadcrumb %}{% if superuser  %}
+<a href="{% url dj.views.start %}">Admin View</a>
+{% endif %}
+
+{% endblock %}
+
+{% block content %}
+        <h1>Select a document to annotate</h1>
+<div id="content-main">
+
+<!--<ul class="object-tools"><li><a href="/abstracts09/new/" class="addlink">Add abstract</a></li></ul>-->
+
+<div class="module changelist">
+
+<table cellspacing="0">
+  <thead>
+    <tr>
+      <th>
+        Title
+      </th>
+	  <th>
+        Author
+      </th>
+	  <th>
+        Email
+      </th>
+	 
+	  <th>
+        Date created
+      </th>
+	  <th>
+        Status
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    {% if doc_list %}
+    {% for doc in doc_list %}
+         <tr class="{% cycle row1,row2 %}">
+             <th><a href="{% url dj.views.documentByAnnotator doc.id %}">{{ doc.title}}</a></th>
+			 <th>{{ doc.author}}</th>
+			 <th>{{ doc.email}}</th>
+
+			 <th>{{ doc.create_date}}</th>
+			 <th>{% if doc.submit_date %}Submitted{% else %}Not Submitted {% endif %}</th>
+		</tr
+    {% endfor %}
+    {% endif %}
+  </tbody>
+</table>
+<p class="paginator">
+
+{{ doc_list|length }} documents
+
+</p>
+
+</div>
+</div>
+
+        
+<br class="clear" />
+</div>
+{% endblock %}
+<!-- END Content -->
+

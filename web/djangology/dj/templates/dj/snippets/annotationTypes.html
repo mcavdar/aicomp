@@ -1,0 +1,10 @@
+{% if annotation_types %}
+<table>
+    {% for annotation_type in annotation_types %}
+    <tr>
+        <td><span class="category{{annotation_type.id}}">{{annotation_type.type}}</span></td>
+        <td>{{annotation_type.description}}<p/></td>
+    </tr>
+    {% endfor %}
+</table>
+{% endif %}

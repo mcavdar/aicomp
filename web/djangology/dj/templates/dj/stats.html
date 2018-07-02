@@ -1,0 +1,566 @@
+{% extends "dj/base.html" %}
+
+{% block title %}Inter-Annotator Agreement{% endblock %}
+
+    {% block page-name %}Inter-Annotator Agreement for annotators '{{annotator1.username}}',
+            '{{annotator2.username}}' , project '{{project.name}}', total of {{iaaStats.docStats|length}}
+            documents.{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}dj/css/changelists.css"/>
+{% endblock %}
+
+        {% block breadcrumb %}<a href="{% url dj.views.start %}">Home</a>{% endblock %}
+        {% block content %}
+        <a href="{% url dj.views.projectEdit project.id %}">Go back to {{ project.name }}</a>
+<!--<div class="breadcrumbs">&rsaquo; Stats</div>-->
+<h1>2-way IAA Results - Exact Span Match</h1>
+
+<div id="content-main">
+
+
+    <div class="module changelist">
+
+
+        <table cellspacing="0">
+            <thead>
+            <tr>
+                <th>
+                    Type
+                </th>
+                <th>
+                    IAA
+                </th>
+                <th>
+                    Matches
+                </th>
+                <th>
+                    Non-matches
+                </th>
+
+            </tr>
+            </thead>
+            <tbody>
+
+
+            {% for k,v in iaaStats.classExactSpan.items%}
+            <tr class="{% cycle row1,row2 %}">
+                <th>{{ k}}</a></th>
+                <th>{{ v.iaaPercent}}</a></th>
+                <th>{{ v.matches}}</a></th>
+                <th>{{ v.nonMatches}}</a></th>
+
+            </tr
+                    {% endfor %}
+
+            </tbody>
+        </table>
+
+
+        <!--<p class="paginator">-->
+
+        <!--{{ doc_list|length }} abstracts-->
+
+        <!--</p>-->
+
+    </div>
+
+
+</div>
+
+
+<br class="clear"/>
+<h1>2-way IAA Results - Non-exact Span Match</h1>
+<div id="content-main">
+    <div class="module changelist">
+        <table cellspacing="0">
+            <thead>
+            <tr>
+                <th>
+                    Type
+                </th>
+                <th>
+                    IAA
+                </th>
+                <th>
+                    Matches
+                </th>
+                <th>
+                    Non-matches
+                </th>
+
+            </tr>
+            </thead>
+            <tbody>
+
+
+            {% for k,v in iaaStats.classOverlapSpan.items%}
+            <tr class="{% cycle row1,row2 %}">
+                <th>{{ k}}</a></th>
+                <th>{{ v.iaaPercent}}</a></th>
+                <th>{{ v.matches}}</a></th>
+                <th>{{ v.nonMatches}}</a></th>
+
+            </tr
+                    {% endfor %}
+
+            </tbody>
+        </table>
+
+
+        <!--<p class="paginator">-->
+
+        <!--{{ doc_list|length }} abstracts-->
+
+        <!--</p>-->
+
+    </div>
+
+
+</div>
+
+
+<br class="clear"/>
+
+<!------------ >
+
+<h1>2-way IAA Results - Classless matches</h1>
+
+
+<div id="content-main">
+
+
+    <div class="module changelist">
+
+
+        <table cellspacing="0">
+            <thead>
+            <tr>
+                <th>
+                    Type
+                </th>
+                <th>
+                    IAA
+                </th>
+                <th>
+                    Matches
+                </th>
+                <th>
+                    Non-matches
+                </th>
+
+            </tr>
+            </thead>
+            <tbody>
+
+
+            <tr class="{% cycle row1,row2 %}">
+                <th> Exact Span</a></th>
+                <th>{{ iaaStats.exactSpan.iaaPercent}}</a></th>
+                <th>{{ iaaStats.exactSpan.matches}}</a></th>
+                <th>{{ iaaStats.exactSpan.nonMatches}}</a></th>
+
+            </tr>
+
+            <tr class="{% cycle row1,row2 %}">
+                <th> Overlap Span</a></th>
+                <th>{{ iaaStats.overlapSpan.iaaPercent}}</a></th>
+                <th>{{ iaaStats.overlapSpan.matches}}</a></th>
+                <th>{{ iaaStats.overlapSpan.nonMatches}}</a></th>
+
+            </tr>
+
+
+            </tbody>
+        </table>
+
+
+        <!--<p class="paginator">-->
+
+        <!--{{ doc_list|length }} abstracts-->
+
+        <!--</p>-->
+
+    </div>
+
+
+</div>
+
+
+<br class="clear"/>
+<!------------ >
+
+
+<!-- pair wise aggreements -->
+
+
+<h1>Pair-wise agreement - Exact Span Match</h1>
+
+
+<div id="content-main">
+
+
+    <div class="module changelist">
+
+
+        <table cellspacing="0">
+            <thead>
+            <tr>
+
+                <th>
+                    Gold Standard Set
+                </th>
+                <th>
+                    Compared Set
+                </th>
+                <th>
+                    Type
+                </th>
+                <th>
+                    True Positives
+                </th>
+                <th>
+                    False positives
+                </th>
+                <th>
+                    False negarives
+
+                </th>
+                <th>
+                    Precision
+                </th>
+
+                <th>
+                    Recall
+                </th>
+                <th>
+                    F score
+                </th>
+
+
+            </tr>
+            </thead>
+            <tbody>
+
+
+            {% for k,v in iaaStats.classExactSpan.items%}
+            <tr class="{% cycle row1,row2 %}">
+                <th>{{ annotator1.username}}</a></th>
+                <th>{{ annotator2.username}}</a></th>
+                <th>{{ k}}</a></th>
+                <th>{{ v.truePositive}}</a></th>
+                <th>{{ v.falsePositive}}</a></th>
+                <th>{{ v.falseNegative}}</a></th>
+                <th>{{ v.precision}}</a></th>
+                <th>{{ v.recall}}</a></th>
+                <th>{{ v.fscore}}</a></th>
+
+
+            </tr>
+
+            {% endfor %}
+
+            </tbody>
+        </table>
+
+
+        <!--<p class="paginator">-->
+
+        <!--{{ doc_list|length }} abstracts-->
+
+        <!--</p>-->
+
+    </div>
+
+
+</div>
+
+
+<br class="clear"/>
+
+
+<!--NEXT-->
+
+<h1>Pair-wise agreement - Overlap Span Match</h1>
+
+
+<div id="content-main">
+
+
+    <div class="module changelist">
+
+
+        <table cellspacing="0">
+            <thead>
+            <tr>
+
+                <th>
+                    Gold Standard Set
+                </th>
+                <th>
+                    Compared Set
+                </th>
+                <th>
+                    Type
+                </th>
+                <th>
+                    True Positives
+                </th>
+                <th>
+                    False positives
+                </th>
+                <th>
+                    False negarives
+
+                </th>
+                <th>
+                    Precision
+                </th>
+
+                <th>
+                    Recall
+                </th>
+                <th>
+                    F score
+                </th>
+
+
+            </tr>
+            </thead>
+            <tbody>
+
+
+            {% for k,v in iaaStats.classOverlapSpan.items%}
+            <tr class="{% cycle row1,row2 %}">
+                <th>{{ annotator1.username}}</a></th>
+                <th>{{ annotator2.username}}</a></th>
+                <th>{{ k}}</a></th>
+                <th>{{ v.truePositive}}</a></th>
+                <th>{{ v.falsePositive}}</a></th>
+                <th>{{ v.falseNegative}}</a></th>
+                <th>{{ v.precision}}</a></th>
+                <th>{{ v.recall}}</a></th>
+                <th>{{ v.fscore}}</a></th>
+
+
+            </tr>
+
+            {% endfor %}
+
+            </tbody>
+        </table>
+
+
+        <!--<p class="paginator">-->
+
+        <!--{{ doc_list|length }} abstracts-->
+
+        <!--</p>-->
+
+    </div>
+
+
+</div>
+
+
+<br class="clear"/>
+<!--END NEXT-->
+
+<!--NEXT-->
+
+
+<h1>Pair-wise agreement - Classless matches</h1>
+
+
+<div id="content-main">
+
+
+    <div class="module changelist">
+
+
+        <table cellspacing="0">
+            <thead>
+            <tr>
+
+                <th>
+                    Gold Standard Set
+                </th>
+                <th>
+                    Compared Set
+                </th>
+                <th>
+                    Type
+                </th>
+                <th>
+                    True Positives
+                </th>
+                <th>
+                    False positives
+                </th>
+                <th>
+                    False negarives
+
+                </th>
+                <th>
+                    Precision
+                </th>
+
+                <th>
+                    Recall
+                </th>
+                <th>
+                    F score
+                </th>
+
+            </tr>
+            </thead>
+            <tbody>
+
+
+            <tr class="{% cycle row1,row2 %}">
+                <th>{{ annotator1.username}}</a></th>
+                <th>{{ annotator2.username}}</a></th>
+                <th> Exact Span</a></th>
+                <th>{{ iaaStats.exactSpan.truePositive}}</a></th>
+                <th>{{ iaaStats.exactSpan.falsePositive}}</a></th>
+                <th>{{ iaaStats.exactSpan.falseNegative}}</a></th>
+                <th>{{ iaaStats.exactSpan.precision}}</a></th>
+                <th>{{ iaaStats.exactSpan.recall}}</a></th>
+                <th>{{ iaaStats.exactSpan.fscore}}</a></th>
+
+
+            </tr>
+
+            <tr class="{% cycle row1,row2 %}">
+                <th>{{ annotator1.username}}</a></th>
+                <th>{{ annotator2.username}}</a></th>
+                <th> Overlap Span</a></th>
+                <th>{{ iaaStats.overlapSpan.truePositive}}</a></th>
+                <th>{{ iaaStats.overlapSpan.falsePositive}}</a></th>
+                <th>{{ iaaStats.overlapSpan.falseNegative}}</a></th>
+                <th>{{ iaaStats.overlapSpan.precision}}</a></th>
+                <th>{{ iaaStats.overlapSpan.recall}}</a></th>
+                <th>{{ iaaStats.overlapSpan.fscore}}</a></th>
+
+            </tr>
+
+
+            </tbody>
+        </table>
+
+
+        <!--<p class="paginator">-->
+
+        <!--{{ doc_list|length }} abstracts-->
+
+        <!--</p>-->
+
+    </div>
+
+
+</div>
+
+
+<br class="clear"/>
+<!--END NEXT-->
+
+<!-- end pair wise aggreements -->
+
+
+<!--NEXT-->
+
+
+<h1>Document list</h1>
+
+
+<div id="content-main">
+
+
+    <div class="module changelist">
+
+
+        <table cellspacing="0">
+            <thead>
+            <tr>
+                <th>
+                    Document Name
+                </th>
+
+                <th>
+                    Gold Standard Set
+                </th>
+                <th>
+                    Compared Set
+                </th>
+
+                <th>
+                    Exact Span Precision
+                </th>
+
+                <th>
+                    Exact Span Recall
+                </th>
+                <th>
+                    Exact Span F score
+                </th>
+
+                <th>
+                    Non-exact Span Precision
+                </th>
+
+                <th>
+                    Non-exact Span Recall
+                </th>
+                <th>
+                    Non-exact Span F score
+                </th>
+
+            </tr>
+            </thead>
+            <tbody>
+
+
+            {% for docStat in iaaStats.docStats%}
+            <tr class="{% cycle row1,row2 %}">
+                <th><a href="{% url dj.views.docCompare docStat.doc.id,annotator1.id,annotator2.id%}">{{ docStat.doc.title }}</a></th>
+
+                <th>{{ annotator1.username }}</a></th>
+                <th>{{ annotator2.username }}</a></th>
+
+                <th>{{ docStat.exactSpan.precision }}</a></th>
+                <th>{{ docStat.exactSpan.recall }}</a></th>
+                <th>{{ docStat.exactSpan.fscore }}</a></th>
+                <th>{{ docStat.overlapSpan.precision }}</a></th>
+                <th>{{ docStat.overlapSpan.recall }}</a></th>
+                <th>{{ docStat.overlapSpan.fscore }}</a></th>
+
+
+            </tr>
+
+            {% endfor %}
+
+
+            </tbody>
+        </table>
+
+
+        <!--<p class="paginator">-->
+
+        <!--{{ doc_list|length }} abstracts-->
+
+        <!--</p>-->
+
+    </div>
+
+
+</div>
+
+
+<br class="clear"/>
+<!--END NEXT-->
+
+
+</div>
+<!-- END Content -->
+{% endblock %}
+

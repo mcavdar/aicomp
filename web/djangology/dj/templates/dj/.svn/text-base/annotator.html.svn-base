@@ -1,0 +1,71 @@
+{% extends "dj/base.html" %}
+{% block css %}
+<link rel="stylesheet" href="{{ MEDIA_URL }}dj/css/colorPicker.css" type="text/css" media="screen"/>
+<style type="text/css">
+    .border-bottom {
+    /*border: none;*/
+    /*    border-bottom: 1px solid #000000;*/
+        /*border-width: .2em;
+       border-style: solid;
+       border-color: #000000;*/
+        padding-bottom: 10px;
+    }
+
+    .border-top {
+    /*border: none;*/
+    /*border-top: 1px solid #000000;*/
+        /*border-width: .2em;
+       border-style: solid;
+       border-color: #000000;*/
+        padding-top: 10px;
+    }
+</style>
+{% endblock %}
+
+{% block js %}
+{% endblock %}
+
+{% block title %}
+{% if form.instance.id %}
+Manage Annotator: {{ form.instance.username }}
+{% else %}
+Add an Annotator
+{% endif %}
+{% endblock %}
+{% block page-name %}
+{% if form.instance.id %}
+Manage Annotator: <i>{{ form.instance.username }}</i>
+{% else %}
+Add an Annotator
+{% endif %}
+{% endblock %}
+
+{% block breadcrumb %}<a href="{% url dj.views.start %}">Home</a>{% endblock %}
+
+{% block content %}
+
+
+<form action="{% url dj.views.editAnnotator %}" method="post">
+<div class="fieldWrapper">
+
+        
+    <table>
+        {{ form.as_table }}
+    </table>
+    
+    {% if form.instance.id %}
+        <input type="hidden" name="annotator_id" value="{{form.instance.id}}"/>
+        {% endif %}
+
+    {% if form.instance.id %}
+    <p><input type="submit" value="Save Changes" />
+    {% else %}
+    <p><input type="submit" value="Add new Annotator" />
+    {% endif %}
+    <input type=button value="Cancel" onClick="javascript:history.go(-1);"></p>
+</form>
+
+
+
+{% endblock %}
+

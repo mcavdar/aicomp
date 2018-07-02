@@ -1,0 +1,10 @@
+{% if annotation_types %}
+    {% for annotation_type in annotation_types %}
+
+      .category{{annotation_type.id}} {
+         color: {{annotation_type.color}} !important;
+        font-weight: bolder;
+}
+
+    {% endfor %}
+{% endif %}
