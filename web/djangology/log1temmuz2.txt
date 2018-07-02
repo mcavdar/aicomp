@@ -1,0 +1,58 @@
+Validating models...
+0 errors found
+
+Django version 1.1.3, using settings 'djangology.settings'
+Development server is running at http://0.0.0:8000/
+Quit the server with CONTROL-C.
+doccccc
+uuuu
+Adnan Ataman
+sss
+[OrderedDict([('cevap_baslangici', 53), ('cevap', u'Haziran 1950'), ('soru', u'Adnan Ataman hangi tarihte doktoras\u0131n\u0131 tamamlam\u0131\u015ft\u0131r?')])]
+Adnan Ataman
+sss
+[OrderedDict([('cevap_baslangici', 53), ('cevap', u'Haziran 1950'), ('soru', u'Adnan Ataman hangi tarihte doktoras\u0131n\u0131 tamamlam\u0131\u015ft\u0131r?')]), OrderedDict([('cevap_baslangici', 55), ('cevap', u'Illinois \xdcniversitesi'), ('soru', u'Adnan Ataman hangi \xfcniversitede doktoras\u0131n\u0131 tamamlam\u0131\u015ft\u0131r?')])]
+Adnan Ataman
+sss
+[OrderedDict([('cevap_baslangici', 53), ('cevap', u'Haziran 1950'), ('soru', u'Adnan Ataman hangi tarihte doktoras\u0131n\u0131 tamamlam\u0131\u015ft\u0131r?')]), OrderedDict([('cevap_baslangici', 55), ('cevap', u'Illinois \xdcniversitesi'), ('soru', u'Adnan Ataman hangi \xfcniversitede doktoras\u0131n\u0131 tamamlam\u0131\u015ft\u0131r?')]), OrderedDict([('cevap_baslangici', 13), ('cevap', u'1935'), ('soru', u"Adnan Ataman hangi y\u0131lda Y\xfcksek M\xfchendis Mektebi'ne ba\u015flam\u0131\u015ft\u0131r?")])]
+paragraf:
+soru text:
+cevap:
+cevap idx:
+doccccc
+baslikindata
+zzzz
+zzzz
+paragraf:
+soru text:
+cevap:
+cevap idx:
+doccccc
+uuuu
+test
+doccccc
+uuuu
+Adnan Ataman
+sss
+[OrderedDict([('cevap_baslangici', 53), ('cevap', u'Haziran 1950'), ('soru', u'Adnan Ataman hangi tarihte doktoras\u0131n\u0131 tamamlam\u0131\u015ft\u0131r?')])]
+Adnan Ataman
+sss
+[OrderedDict([('cevap_baslangici', 53), ('cevap', u'Haziran 1950'), ('soru', u'Adnan Ataman hangi tarihte doktoras\u0131n\u0131 tamamlam\u0131\u015ft\u0131r?')]), OrderedDict([('cevap_baslangici', 55), ('cevap', u'Illinois \xdcniversitesi'), ('soru', u'Adnan Ataman hangi \xfcniversitede doktoras\u0131n\u0131 tamamlam\u0131\u015ft\u0131r?')])]
+Adnan Ataman
+sss
+[OrderedDict([('cevap_baslangici', 53), ('cevap', u'Haziran 1950'), ('soru', u'Adnan Ataman hangi tarihte doktoras\u0131n\u0131 tamamlam\u0131\u015ft\u0131r?')]), OrderedDict([('cevap_baslangici', 55), ('cevap', u'Illinois \xdcniversitesi'), ('soru', u'Adnan Ataman hangi \xfcniversitede doktoras\u0131n\u0131 tamamlam\u0131\u015ft\u0131r?')]), OrderedDict([('cevap_baslangici', 13), ('cevap', u'1935'), ('soru', u"Adnan Ataman hangi y\u0131lda Y\xfcksek M\xfchendis Mektebi'ne ba\u015flam\u0131\u015ft\u0131r?")])]
+paragraf:
+soru text:
+cevap:
+cevap idx:
+doccccc
+baslikindata
+zzzz
+zzzz
+paragraf:
+soru text:
+cevap:
+cevap idx:
+doccccc
+uuuu
+test
