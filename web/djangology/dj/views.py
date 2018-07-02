@@ -63,7 +63,6 @@ def jsonoutput(request, error=None):
     #print("annotator_id:")
     #print(request.user.id)
     annotator_id = request.user.id
-    #print(annotator_id)
     if annotator_id and request.user.is_superuser:
         annotator = Annotator.objects.filter(id=annotator_id)[0]
     else:
@@ -72,29 +71,27 @@ def jsonoutput(request, error=None):
     data={}
     data['veri']=[]
     for doc in docs:
-	print("doccccc")
 	flag = 0
 	for a in data['veri']:
 	    if a['baslik']==doc.title:
-		print("baslikindata")
 		flag = 1
 		questions=Question.objects.filter(document=doc)
 		d1 = []
 		for qst in questions:
-		    rps=Reponse.objects.filter(question=qst)[0]
-		    print("zzzz")
-		    d1.append(OrderedDict([("cevap_baslangici",rps.reponseIdx),("cevap",rps.reponse),("soru",rps.question.text)]))
+		    rps=Reponse.objects.filter(question=qst)
+		    if len(rps)>0:
+			rpss = rps[0]
+		        d1.append(OrderedDict([("cevap_baslangici",rpss.reponseIdx),("cevap",rpss.reponse),("soru",rpss.question.text)]))
 		a['paragraflar'].append({'paragraf_metni':doc.text,'soru_cevaplar':d1})
 		break
 	if flag==0:
 	    questions=Question.objects.filter(document=doc)
             d1 = []
-	    print("uuuu")
             for qst in questions:
-		print(qst.document.title)
-                rps=Reponse.objects.filter(question=qst)[0]
-		print("sss")
-	        d1.append(OrderedDict([("cevap_baslangici",rps.reponseIdx),("cevap",rps.reponse),("soru",rps.question.text)]))
+                rps=Reponse.objects.filter(question=qst)
+		if len(rps)>0:
+		    rpss=rps[0]
+	            d1.append(OrderedDict([("cevap_baslangici",rpss.reponseIdx),("cevap",rpss.reponse),("soru",rpss.question.text)]))
 		print(d1)
 	    dt={}
             dt['baslik']=doc.title
