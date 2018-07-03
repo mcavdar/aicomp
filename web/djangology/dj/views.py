@@ -452,8 +452,8 @@ def upload_file(request, project_id=None):
     
 
 
-    if not request.user.is_staff:
-        return HttpResponseForbidden("Error: You must be an administrator to use this form")
+    #if not request.user.is_staff:
+    #    return HttpResponseForbidden("Error: You must be an administrator to use this form")
     if not request.FILES.has_key('fileToUpload') or not request.FILES['fileToUpload']:
 	if doc_text=="":
 	    return projectEdit(request,project_id=project_id,error="Please select a file to upload (supported formats are .zip and .txt).sssss"+doc_text)
@@ -466,6 +466,8 @@ def upload_file(request, project_id=None):
             doc.text = doc_text
             #doc.text = smart_unicode(doc.text, encoding='utf-8', strings_only=False, errors='ignore')
             doc.save()
+    	    annotator = Annotator.objects.get(id=request.user.id) 
+    	    annotator.documents.add(doc)
 	    return projectEdit(request, project_id=project_id,error="islem basariyla tamamlanmistir.")   
     f = request.FILES['fileToUpload']
     if (not f.name.endswith('.txt')) and (not f.name.endswith('.zip')):
@@ -479,6 +481,8 @@ def upload_file(request, project_id=None):
         doc.text = f.read()
         doc.text = smart_unicode(doc.text, encoding='utf-8', strings_only=False, errors='ignore')
         doc.save()
+    	annotator = Annotator.objects.get(id=request.user.id) 
+    	annotator.documents.add(doc)
     if fnmatch.fnmatch(f.name, '*.zip'):
         zipdata = ""
         for chunk in f.chunks(): # don't blow chunks now..
@@ -492,13 +496,15 @@ def upload_file(request, project_id=None):
             doc.text = zip.read(file).strip()
             doc.text = smart_unicode(doc.text, encoding='utf-8', strings_only=False, errors='ignore')
             doc.save()
+    	    annotator = Annotator.objects.get(id=request.user.id) 
+    	    annotator.documents.add(doc)
         zip.close()
     return projectEdit(request, project_id=project_id,error="islem basariyla tamamlanmistir.")   
 
 @login_required
 def projectList(request, error=None):
-    if not request.user.is_staff:
-        return HttpResponseForbidden("Error: You are not an administrator.")
+    #if not request.user.is_staff:
+    #    return HttpResponseForbidden("Error: You are not an administrator.")
     annotators=Annotator.objects.all()   
     return render_to_response("dj/project-list.html", {'project_list': Project.objects.all(), 'annotator_list': annotators, 'error_message':error}, context_instance=RequestContext(request))
 
@@ -540,10 +546,7 @@ def projectSave(request):
     documents=Document.objects.filter(project=project)
     allAnnotators=Annotator.objects.all()
     for a in allAnnotators:
-        if request.POST.has_key("projectAnnotator_%s"%a.id):
-            project.annotators.add(a)
-        else:
-            project.annotators.remove(a)
+        project.annotators.add(a)
     project.save()   
     return projectEdit(request, project_id=project.id)
 
@@ -575,8 +578,8 @@ def projectSaveDocuments(request):
 
 @login_required
 def projectEdit(request, project_id=None, error=None):
-    if not request.user.is_staff:
-        return HttpResponseForbidden("Error: You must be an administrator to use this form")
+    #if not request.user.is_staff:
+    #    return HttpResponseForbidden("Error: You must be an administrator to use this form")
     project=None
     user_list = []
     form = UploadFileForm()
@@ -602,7 +605,7 @@ def projectEdit(request, project_id=None, error=None):
                 else:
                     doc.user_list.append(False)
         annotation_types = AnnotationType.objects.filter(project=project) 
-    if request.user.is_staff and not request.user.is_superuser:
+    if not request.user.is_superuser:
     	return render_to_response("dj/project-edit2.html",
                               {'project' : project,
                                'user_list': user_list,

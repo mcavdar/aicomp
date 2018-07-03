@@ -54,11 +54,13 @@ Add an Annotator
 
 {% ifnotequal field.name|stringformat:"s" "is_superuser" %}
 
+
+
 {{ field.label }} {{ field }} 
                     {% if forloop.counter|divisibleby:"2" %}
                         <br>
-                    {% endif %}
 
+                    {% endif %}
 {% endifnotequal %}
 {% endfor %}
  </table>
