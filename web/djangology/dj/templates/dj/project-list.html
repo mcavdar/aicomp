@@ -31,7 +31,10 @@
             <tbody>
             {% for project in project_list %}
                 <tr class="{% cycle row1,row2 %}">
-                    <td><input class="delbox" value="{{project.id}}" name="project_ids" type="checkbox"></td>
+<td>
+{% if user.is_superuser %}
+                    <input class="delbox" value="{{project.id}}" name="project_ids" type="checkbox">
+  {% endif %}</td>
                     <td><a href="{% url dj.views.projectEdit project.id %}">{{ project.name }}</a></td>
                 </tr>
             {% endfor %}
@@ -39,7 +42,9 @@
         </table>
     </div>
     {% endblock %}
+{% if user.is_superuser %}
     <input value="Seçilenleri Sil" type="submit" id="projectsection-del-selected-projs" />
+  {% endif %}
     </form>
 
 </div>
