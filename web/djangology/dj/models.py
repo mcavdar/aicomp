@@ -8,6 +8,25 @@ from django.core.urlresolvers import reverse
 
 from dj.widgets import ColorPickerWidget
 from dj.urls import patterns
+import time
+import random
+START_TIME = time.time()
+
+def make_id():
+    '''
+    inspired by http://instagram-engineering.tumblr.com/post/10853187575/sharding-ids-at-instagram
+        '''
+
+    t = int(time.time() - START_TIME)
+    u = random.SystemRandom().getrandbits(15)
+    id = (t << 15 ) | u
+
+    return id
+
+
+def reverse_id(id):
+    t  = id >> 15
+    return t + START_TIME
 
 class ColorField(models.CharField):
     def __init__(self, *args, **kwargs):
@@ -34,6 +53,7 @@ class Project(models.Model):
         return self.name
 
 class Document(models.Model):
+    id = models.IntegerField(default = make_id, primary_key=True)
     text = models.TextField()
     create_date = models.DateTimeField()
     title = models.TextField()

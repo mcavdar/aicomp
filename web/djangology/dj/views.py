@@ -117,8 +117,11 @@ def documentByAnnotator(request, document_id, annotator_id=None, error=None):
     if annotator_id and request.user.is_superuser:
         annotator = Annotator.objects.filter(id=annotator_id)[0]
     else:
-        annotator = Annotator.objects.filter(id=request.user.id)[0]   
-    doc = Document.objects.filter(id=document_id)[0]
+        annotator = Annotator.objects.filter(id=request.user.id)[0]
+    try:   
+    	doc = Document.objects.filter(id=document_id)[0]
+    except:
+	return HttpResponse('No document found!')
     annotations=Annotation.objects.filter(document=doc, annotator=annotator)
     questions=Question.objects.filter(document=doc)
     reponses = []
