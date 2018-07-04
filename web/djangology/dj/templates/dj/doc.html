@@ -83,8 +83,6 @@ var question_idd;
 
 
         }
-	console.log(selectedText.toString());
-	console.log(selectedText.rangeCount);
         addNewNamedEntity(selectedText, e);
         Event.stop(e);
         return true;
@@ -124,19 +122,13 @@ var question_idd;
 function addReponse2(){
 
         if (navigator.appName == 'Microsoft Internet Explorer' && e.button == 0) {
-            console.log("cccccccccc")
             selectedText = document.selection.createRange().text;
 
         } else {
-            console.log("zzzzzzzz")
             selectedText = window.getSelection();
 
 
         }
-console.log(selectedText)
-console.log(selectedText.focusOffset);
-console.log(selectedText.anchorOffset);
-console.log(selectedText.toString().substring(0,selectedText.focusOffset));
 
 
 var f = document.createElement('form');

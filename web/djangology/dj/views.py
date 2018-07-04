@@ -93,20 +93,20 @@ def jsonoutput(request, error=None):
 		if len(rps)>0:
 		    rpss=rps[0]
 	            d1.append(OrderedDict([("cevap_baslangici",rpss.reponseIdx),("cevap",rpss.reponse),("soru",rpss.question.text)]))
-		print(d1)
+		#print(d1)
 	    if len(d1)>0:
 	    	dt={}
             	dt['baslik']=doc.title
             	dt['paragraflar']=[{'paragraf_metni':doc.text,'soru_cevaplar':d1}]
             	data['veri'].append(dt)
 
-	print("paragraf:")
+	#print("paragraf:")
 	#print(rps.document.text)
-	print("soru text:")
+	#print("soru text:")
 	#print(rps.question.text)
-	print("cevap:")
+	#print("cevap:")
 	#print(rps.reponse)
-	print("cevap idx:")
+	#print("cevap idx:")
 	#print(rps.reponseIdx)
 
     #return HttpResponse('success %s %s %s %s'%(rps.document.text,rps.question.text,rps.reponse,rps.reponseIdx))
@@ -213,18 +213,12 @@ def newReponse(request, document_id):
     question = Question.objects.get(id=questnId)
     doc_text = document.text
     until_annot = doc_text[:int(request.POST['newNecReponseOffset'])-7]
-    #print("zzzzzzzzssss")
-    #print(int(request.POST['newNecReponseOffset'])-7)
-    #print(until_annot)
     sp = until_annot.split(' ')
-    #print(sp)
     reponseIdx = len(until_annot.split(' '))-1
-    #print(reponseIdx)
     reps = Reponse(document=document, annotator=annotator ,question=question, reponse=request.POST['newNecReponse'],reponseIdx=reponseIdx)
     reps.save()
 
     return documentByAnnotator(request, document_id, annotator_id=request.user.id, error=None)
-    #return HttpResponse('success:')
 
 @login_required
 def deleteQuestion(request, docID=None):
@@ -419,7 +413,7 @@ def upload_file(request, project_id=None):
     three_nearest = []
     nearest_count = -1
     jcos = copy.deepcopy(jaccard_coefficients)
-    print(jcos)
+    #print(jcos)
     while len(three_nearest) < 3 and len(jcos)>0:
         index,coefficient = max(enumerate(jcos), key=operator.itemgetter(1))
         del jcos[index]
@@ -661,8 +655,6 @@ def editAnnotator(request, annotator_id=None):
         form = AnnotatorForm(instance=a)
     else:
         form = AnnotatorForm() # An unbound form
-	print("zxzxzxz")
-	print(form)
     return render_to_response('dj/annotator.html', {
         'form': form,
         },
