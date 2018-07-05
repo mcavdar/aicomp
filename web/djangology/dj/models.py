@@ -18,14 +18,14 @@ def make_id():
         '''
 
     t = int(time.time() - START_TIME)
-    u = random.SystemRandom().getrandbits(15)
-    id = (t << 15 ) | u
+    u = random.SystemRandom().getrandbits(4)
+    id = (t << 4 ) | u
 
     return id
 
 
 def reverse_id(id):
-    t  = id >> 15
+    t  = id >> 4
     return t + START_TIME
 
 class ColorField(models.CharField):
