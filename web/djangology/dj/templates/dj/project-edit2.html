@@ -59,12 +59,11 @@ Create new Project
 
 <div id="upload-doc" class="content">
     <p>
-    <h3>Döküman Yükleme (Text dosyası ya da text dosyası içeren zip dosyası)</h3>
+    <h3>Paragraf Yükleme </h3>
     <form name="form" action="{% url dj.views.upload_file project.id %}" method="post" enctype="multipart/form-data">
-        <input id="fileToUpload" class="input" type="file" name="fileToUpload" size="45"/>
-<p><label for="title_text">Başlık:</label>
+<p><label for="title_text">Döküman Başlığı:</label>
 <input id="title_text" type="text" name="doc_title" /></p>
-<p><label for="doc_text_id">İçerik:</label>
+<p><label for="doc_text_id">Paragraf:</label>
 <textarea name="doc_text" id="doc_text_id"></textarea>
 
         <p><input type="submit" name="Upload" value="Yükle"/></p>
