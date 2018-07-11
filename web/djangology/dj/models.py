@@ -105,14 +105,14 @@ class AnnotationTypeInline(admin.TabularInline):
 
 class Question(models.Model):
     document = models.ForeignKey(Document)
-    text = models.CharField(max_length=200)
+    text = models.CharField(max_length=500)
     annotator=models.ForeignKey(Annotator)
 
 class Reponse(models.Model):
     document = models.ForeignKey(Document)
     question = models.ForeignKey(Question)
     annotator=models.ForeignKey(Annotator)
-    reponse = models.CharField(max_length=200)
+    reponse = models.CharField(max_length=500)
     reponseIdx = models.IntegerField()
 
 class Annotation(models.Model):
